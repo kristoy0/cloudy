@@ -45,6 +45,16 @@ def create(name):
 def render():
     print('Rendering HTML from templates')
 
+    if (os.path.exists(CURRENT_DIR) 
+        # and os.path.isfile(CURRENT_DIR + 'cloudy.yml')
+        and os.path.exists(CURRENT_DIR + '/static')
+        and os.path.exists(CURRENT_DIR + '/posts')):
+
+        generate_template()
+
+    else:
+        print('Not in a cloudy project directory')
+
 def generate_template():
     env = Environment(
         loader=FileSystemLoader(THEME_DIR),
@@ -58,7 +68,7 @@ def generate_template():
         ('Post 1', 'July 2, 2018', 'Test content')
     ]
 
-    template.stream(title=title, posts=posts).dump(STATIC_DIR + 'index.html')
+    template.stream(title=title, posts=posts).dump(CURRENT_DIR + '/static/index.html')
 
 
 if __name__ == '__main__':
