@@ -2,6 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 import os
 from sys import argv
 from shutil import copytree
+import mistune
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 THEME_DIR = THIS_DIR + '/theme/'
@@ -49,13 +50,25 @@ def render():
         # and os.path.isfile(CURRENT_DIR + 'cloudy.yml')
         and os.path.exists(CURRENT_DIR + '/static')
         and os.path.exists(CURRENT_DIR + '/posts')):
-
-        generate_template()
+        
+        date, title, body = parse_markdown()
+        generate_template(date, title, body)
 
     else:
         print('Not in a cloudy project directory')
 
-def generate_template():
+def parse_markdown():
+    with open(CURRENT_DIR + '/posts/example_post.md', 'r') as f:
+        metadata = next(f).split(";")
+        date = eval(metadata[0])
+        title = eval(metadata[1])
+
+        body = mistune.markdown(f.read())
+    
+    return (date, title, body)
+
+
+def generate_template(date, title, body):
     env = Environment(
         loader=FileSystemLoader(THEME_DIR),
         trim_blocks=True
@@ -63,12 +76,12 @@ def generate_template():
 
     template = env.get_template('index.html')
 
-    title = "Test blog"
+    header_title = "Test blog"
     posts = [
-        ('Post 1', 'July 2, 2018', 'Test content')
+        (title, date, body)
     ]
 
-    template.stream(title=title, posts=posts).dump(CURRENT_DIR + '/static/index.html')
+    template.stream(header_title=header_title, posts=posts).dump(CURRENT_DIR + '/static/index.html')
 
 
 if __name__ == '__main__':
