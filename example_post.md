@@ -1,4 +1,4 @@
-+++ date = "Jun 2, 2018" title = "Test Post" +++
+"Jun 2, 2018"; "Test Post"
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos cum rem optio quisquam natus quibusdam consequuntur totam amet, perferendis aliquam mollitia nemo non maiores officia fugit accusamus quidem similique ipsum.
 Temporibus a voluptas pariatur ducimus amet neque doloribus molestiae ratione, hic et dolorem omnis rerum odit culpa odio sint, ex unde repellendus nemo soluta sunt vitae iure praesentium. Quas, iure!
